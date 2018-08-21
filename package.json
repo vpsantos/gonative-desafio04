@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "decimal.js-light": "^2.4.1",
     "prop-types": "^15.6.2",
     "react": "16.4.1",
+    "react-currency-format": "^1.0.0",
     "react-native": "0.56.0",
     "react-native-iphone-x-helper": "^1.0.3",
     "react-native-vector-icons": "^5.0.0",

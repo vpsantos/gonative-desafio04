@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import {
   View, Text, Image, TextInput, TouchableOpacity,
 } from 'react-native';
@@ -16,7 +18,16 @@ const CartItem = ({ product, handleUpdate, handleDelete }) => (
     <View style={styles.info}>
       <Text style={styles.name}>{product.name}</Text>
       <Text style={styles.brand}>{product.brand}</Text>
-      <Text style={styles.price}>{`R$${product.price}`}</Text>
+      <CurrencyFormat
+        value={product.price}
+        displayType="text"
+        thousandSeparator="."
+        prefix="R$"
+        decimalSeparator=","
+        decimalScale={2}
+        fixedDecimalScale
+        renderText={value => <Text style={styles.price}>{value}</Text>}
+      />
     </View>
 
     <View style={styles.form}>
@@ -26,7 +37,7 @@ const CartItem = ({ product, handleUpdate, handleDelete }) => (
         autoCapitalize="none"
         underlineColorAndroid="transparent"
         value={String(product.quantity)}
-        maxLength={3}
+        maxLength={2}
         keyboardType="numeric"
         onChangeText={(text) => {
           if (/^\d+$/.test(text)) {
@@ -48,7 +59,7 @@ CartItem.propTypes = {
     name: PropTypes.string,
     brand: PropTypes.string,
     price: PropTypes.number,
-    quantity: PropTypes.any,
+    quantity: PropTypes.number,
   }).isRequired,
   handleUpdate: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,

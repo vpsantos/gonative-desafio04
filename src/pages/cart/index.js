@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import { View, FlatList, Text } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -26,7 +28,7 @@ const Cart = ({ cart, removeProduct, updateProduct }) => (
             <CartItem
               product={item}
               handleUpdate={(quantity) => {
-                updateProduct(item.id, quantity);
+                updateProduct(item.id, Number(quantity));
               }}
               handleDelete={() => {
                 removeProduct(item);
@@ -37,7 +39,16 @@ const Cart = ({ cart, removeProduct, updateProduct }) => (
 
         <View style={styles.subtotal}>
           <Text style={styles.subtotalText}>Subtotal</Text>
-          <Text style={styles.subtotalPrice}>{`R$${cart.total}`}</Text>
+          <CurrencyFormat
+            value={cart.total}
+            displayType="text"
+            thousandSeparator="."
+            prefix="R$"
+            decimalSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+            renderText={value => <Text style={styles.subtotalPrice}>{value}</Text>}
+          />
         </View>
       </Fragment>
     ) : (
@@ -46,9 +57,15 @@ const Cart = ({ cart, removeProduct, updateProduct }) => (
   </View>
 );
 
+const TabBarIcon = ({ tintColor }) => <Icon name="shopping-cart" size={20} color={tintColor} />;
+
+TabBarIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+};
+
 Cart.navigationOptions = {
   title: 'Carrinho',
-  tabBarIcon: ({ tintColor }) => <Icon name="shopping-cart" size={20} color={tintColor} />,
+  tabBarIcon: TabBarIcon,
 };
 
 Cart.propTypes = {
@@ -58,7 +75,7 @@ Cart.propTypes = {
         id: PropTypes.number,
       }),
     ),
-    total: PropTypes.any,
+    total: PropTypes.number,
   }).isRequired,
   removeProduct: PropTypes.func.isRequired,
   updateProduct: PropTypes.func.isRequired,

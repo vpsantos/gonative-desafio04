@@ -26,6 +26,8 @@ class Home extends Component {
     tabBarIcon: ({ tintColor }) => <Icon name="home" size={20} color={tintColor} />,
   };
 
+  categoriesLoaded = false;
+
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
@@ -46,8 +48,6 @@ class Home extends Component {
     }).isRequired,
   };
 
-  categoriesLoaded = false;
-
   componentDidMount() {
     const { getCategoriesRequest } = this.props;
 
@@ -62,7 +62,6 @@ class Home extends Component {
         this.categoriesLoaded = true;
 
         const { getCategoryProductsRequest } = prevProps;
-
 
         getCategoryProductsRequest(categories.data[0].id);
       }

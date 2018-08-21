@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as ProductActions } from 'store/ducks/product';
@@ -65,7 +67,16 @@ class Product extends Component {
                 <Text style={styles.name}>{product.data.name}</Text>
                 <Text style={styles.brand}>{product.data.brand}</Text>
               </View>
-              <Text style={styles.price}>{`R$${product.data.price}`}</Text>
+              <CurrencyFormat
+                value={product.data.price}
+                displayType="text"
+                thousandSeparator="."
+                prefix="R$"
+                decimalSeparator=","
+                decimalScale={2}
+                fixedDecimalScale
+                renderText={value => <Text style={styles.price}>{value}</Text>}
+              />
             </View>
             <TouchableOpacity
               onPress={() => { this.addToCart(product.data); }}

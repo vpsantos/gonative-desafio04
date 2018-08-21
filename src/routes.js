@@ -5,7 +5,7 @@ import Home from 'pages/home';
 import Product from 'pages/product';
 import Cart from 'pages/cart';
 
-const navigationOptions = ({ navigation }) => ({
+const navigationOptions = {
   headerStyle: {
     height: 54,
     backgroundColor: colors.white,
@@ -18,7 +18,7 @@ const navigationOptions = ({ navigation }) => ({
   },
   headerTintColor: colors.regular,
   headerBackTitle: null,
-});
+};
 
 const createNavigator = () => TabNavigator(
   {

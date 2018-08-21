@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import {
   View, Text, Image, TouchableOpacity,
 } from 'react-native';
@@ -13,7 +15,16 @@ const ProductItem = ({ product, onPress }) => (
     <View style={styles.info}>
       <Text style={styles.name}>{product.name}</Text>
       <Text style={styles.brand}>{product.brand}</Text>
-      <Text style={styles.price}>{`R$${product.price}`}</Text>
+      <CurrencyFormat
+        value={product.price}
+        displayType="text"
+        thousandSeparator="."
+        prefix="R$"
+        decimalSeparator=","
+        decimalScale={2}
+        fixedDecimalScale
+        renderText={value => <Text style={styles.price}>{value}</Text>}
+      />
     </View>
   </TouchableOpacity>
 );
