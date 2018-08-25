@@ -15,7 +15,7 @@ import CartItem from './components/CartItem';
 
 import styles from './styles';
 
-const Cart = ({ cart, removeProduct, updateProduct }) => (
+const Cart = ({ cart, total, removeProduct, updateProduct }) => (
   <View style={styles.container}>
     {cart.data.length > 0 ? (
       <Fragment>
@@ -40,7 +40,7 @@ const Cart = ({ cart, removeProduct, updateProduct }) => (
         <View style={styles.subtotal}>
           <Text style={styles.subtotalText}>Subtotal</Text>
           <CurrencyFormat
-            value={cart.total}
+            value={total}
             displayType="text"
             thousandSeparator="."
             prefix="R$"
@@ -75,14 +75,23 @@ Cart.propTypes = {
         id: PropTypes.number,
       }),
     ),
-    total: PropTypes.number,
   }).isRequired,
+  total: PropTypes.number.isRequired,
   removeProduct: PropTypes.func.isRequired,
   updateProduct: PropTypes.func.isRequired,
 };
 
+const calculateTotal = (products) => {
+  if (products.length === 0) {
+    return 0;
+  }
+
+  return products.map(product => product.subtotal).reduce((prev, next) => prev + next);
+};
+
 const mapStateToProps = state => ({
   cart: state.cart,
+  total: calculateTotal(state.cart.data),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(CartActions, dispatch);

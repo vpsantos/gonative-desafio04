@@ -14,7 +14,6 @@ export const Types = {
  */
 const intialState = Immutable({
   data: [],
-  total: 0,
 });
 
 export default function cart(state = intialState, action) {
@@ -29,33 +28,17 @@ export default function cart(state = intialState, action) {
         data[index].quantity = quantity;
         data[index].subtotal = data[index].price * quantity;
 
-        return {
-          data,
-          total: data.map(product => product.subtotal).reduce((prev, next) => prev + next),
-        };
+        return { data };
       }
 
       const { product } = action.payload;
       product.quantity = 1;
       product.subtotal = product.price;
 
-      const data = [...state.data, product];
-
-      return {
-        data,
-        total: data.map(item => item.subtotal).reduce((prev, next) => prev + next),
-      };
+      return { data: [...state.data, product] };
     }
     case Types.REMOVE_PRODUCT: {
-      const data = state.data.filter(product => product.id !== action.payload.product.id);
-
-      return {
-        data,
-        total:
-          data.length > 0
-            ? data.map(product => product.subtotal).reduce((prev, next) => prev + next)
-            : 0,
-      };
+      return { data: state.data.filter(product => product.id !== action.payload.product.id) };
     }
     case Types.UPDATE_PRODUCT: {
       if (!action.payload.quantity) {
@@ -69,10 +52,7 @@ export default function cart(state = intialState, action) {
       data[index].quantity = action.payload.quantity;
       data[index].subtotal = data[index].price * action.payload.quantity;
 
-      return {
-        data,
-        total: data.map(product => product.subtotal).reduce((prev, next) => prev + next),
-      };
+      return { data };
     }
     default:
       return state;

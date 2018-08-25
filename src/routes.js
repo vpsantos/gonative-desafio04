@@ -10,6 +10,8 @@ const navigationOptions = {
     height: 54,
     backgroundColor: colors.white,
     borderBottomWidth: 0,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   headerTitleStyle: {
     fontSize: 16,
@@ -52,6 +54,10 @@ const createNavigator = () => TabNavigator(
       style: {
         height: 54,
         backgroundColor: colors.white,
+        elevation: 0,
+        shadowOpacity: 0,
+        borderTopWidth: 1,
+        borderColor: colors.lighter,
       },
       indicatorStyle: {
         height: 0,

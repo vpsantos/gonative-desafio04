@@ -36,7 +36,7 @@ const CartItem = ({ product, handleUpdate, handleDelete }) => (
         autoCorrect={false}
         autoCapitalize="none"
         underlineColorAndroid="transparent"
-        value={String(product.quantity)}
+        defaultValue={String(product.quantity)}
         maxLength={2}
         keyboardType="numeric"
         onChangeText={(text) => {
